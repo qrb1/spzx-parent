@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qrb.spzx.manager.mapper.OrderInfoMapper">
+
+    <!--//根据日期查询统计数据-->
+    <select id="selectOrderStatistics" resultType="com.qrb.spzx.model.entity.order.OrderStatistics">
+        select DATE_FORMAT(oi.create_time ,'%Y-%m-%d') AS orderDate,
+               sum(oi.total_amount) AS totalAmount ,
+               count(oi.id) AS totalNum
+        from order_info oi
+        where DATE_FORMAT(oi.create_time ,'%Y-%m-%d') = #{create_date}
+        GROUP BY DATE_FORMAT(oi.create_time ,'%Y-%m-%d')
+    </select>
+</mapper>
